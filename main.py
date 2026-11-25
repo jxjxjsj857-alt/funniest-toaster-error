@@ -50,6 +50,10 @@ def validate(line: str) -> list[str]:
         problems.append("line has leading or trailing whitespace")
     if "\n" in line or "\r" in line:
         problems.append("line holds a newline, so it is not one line")
+    if any(ord(ch) < 32 for ch in line):
+        problems.append("line holds a control character")
+    if line.count("ERROR") != 1 or not line.startswith("ERROR"):
+        problems.append("line does not open with its error code, so it does not read like a real appliance message")
     return problems
 
 
